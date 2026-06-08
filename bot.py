@@ -81,7 +81,7 @@ async def set_bot_photo(bot, cmd):
         except:
             pass
         
-        # Safe photo selection layout
+        # Safe photo selection logic
         if getattr(Config, 'DYNAMIC_PICS', []):
             random_pic = random.choice(Config.DYNAMIC_PICS)
         elif getattr(Config, 'ANIME_IMAGES', []):
@@ -89,7 +89,7 @@ async def set_bot_photo(bot, cmd):
         else:
             random_pic = "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubX0AAgBAAMCAAN4AAMeBA"
 
-        # Aapka strictly designed text format
+        # Aapka custom layout text and mention
         raw_mention = f"hey!!, {cmd.from_user.first_name}"
         quote1 = f"**» {global_font_bypass(raw_mention)} ~ ❞**"
         
