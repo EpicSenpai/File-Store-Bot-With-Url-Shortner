@@ -63,16 +63,36 @@ Bot = Client(
 
 
 
+# Temporary memory list photo save karne ke liye
+if not hasattr(Config, 'DYNAMIC_PICS'):
+    Config.DYNAMIC_PICS = []
+
+@Bot.on_message(filters.command("setphoto") & filters.private)
+async def set_bot_photo(bot, cmd):
+    # Sirf aap (owner) hi photo set kar pao uske liye check
+    welcome_txt = global_font_bypass("please reply to an image or send an image with /setphoto to save it.")
+    await cmd.reply_text(f"<blockquote>{welcome_txt}</blockquote>")
+
+@Bot.on_message(filters.photo & filters.private)
+async def handle_incoming_photos(bot, cmd):
+    # Agar aap koi bhi image bot ko bhejte ho, toh wo memory mein save ho jayegi
+    file_id = cmd.photo.file_id
+    if file_id not in Config.DYNAMIC_PICS:
+        Config.DYNAMIC_PICS.append(file_id)
+    success_txt = global_font_bypass("image saved successfully in bot database!")
+    await cmd.reply_text(f"<blockquote>{success_txt}</blockquote>")
+
 @Bot.on_message(filters.command("start") & filters.private)
 async def start(bot, cmd: Message):
-
     if cmd.from_user.id in Config.BANNED_USERS:
         await cmd.reply_text("Sorry, You are banned.")
         return
+        
     if Config.UPDATES_CHANNEL is not None:
         back = await handle_force_sub(bot, cmd)
         if back == 400:
             return
+
     usr_cmd = cmd.text.split("_", 1)[-1]
     if usr_cmd == "/start":
         try:
@@ -80,30 +100,38 @@ async def start(bot, cmd: Message):
         except:
             pass
         
-        # 1. Pehle pure text ko small caps font mein convert kiya
-        line1 = global_font_bypass(f"hello, {cmd.from_user.first_name}")
-        line2 = global_font_bypass("this is a permanent filestore bot.")
-        line3 = global_font_bypass("how to use bot & it's benefits??")
-        line4 = global_font_bypass("send me any file & it will be uploaded in my database & you will get shorter link.")
-        line5 = global_font_bypass("benefits: if you have a telegram movie channel or any copyright channel then this bot is very useful for you because your channel will never get copyright strike.")
+        # dynamic image picking check
+        if getattr(Config, 'DYNAMIC_PICS', []):
+            random_pic = random.choice(Config.DYNAMIC_PICS)
+        elif getattr(Config, 'ANIME_IMAGES', []):
+            random_pic = random.choice(Config.ANIME_IMAGES)
+        else:
+            # Fallback agar ek bhi photo na miley
+            random_pic = "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubX0AAgBAAMCAAN4AAMeBA"
+
+        # Aapke screenshot ke mutabik do alag alag modern quotes block layout
+        quote1 = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**"
         
-        # 2. Har line ka apna alag vertical quote block
-        beautiful_text = (
-            f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n"
-            f"<blockquote>{line1}</blockquote>"
-            f"<blockquote>{line2}</blockquote>"
-            f"<blockquote>{line3}</blockquote>"
-            f"<blockquote>📢 {line4}</blockquote>"
-            f"<blockquote>⚠️ {line5}</blockquote>\n"
+        custom_bio = "every light has its shadow, but every shadow can be turned into light.."
+        quote2 = f"<blockquote>{global_font_bypass(custom_bio)}</blockquote>"
+        
+        beautiful_caption = f"<blockquote>{quote1}</blockquote>\n\n{quote2}"
+        
+        await bot.send_photo(
+            chat_id=cmd.chat.id,
+            photo=random_pic,
+            caption=beautiful_caption,
+            parse_mode=enums.ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("• ꜰᴏʀ ᴍᴏʀᴇ •", url="https://t.me/+W0znQsN7HyAzNzUl")],
+                [InlineKeyboardButton("• ᴀʙᴏᴜᴛ •", callback_data="aboutbot"), InlineKeyboardButton("• ᴄᴏᴍᴍᴀɴᴅꜱ •", callback_data="aboutdevs")]
+            ])
         )
 
-        
-        # 3. Clean and responsive text reply format
-        await cmd.reply_text(
-            text=beautiful_text,
-            parse_mode=enums.ParseMode.HTML,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")],[InlineKeyboardButton("About Bot", callback_data="aboutbot"), InlineKeyboardButton("About Dev", callback_data="aboutdevs"), InlineKeyboardButton("Close 🚪", callback_data="closeMessage")],[InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"), InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")]])
-        )
+    else:
+        try:
+            try:
+
 
     else:
         try:
