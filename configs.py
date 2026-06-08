@@ -51,16 +51,10 @@ How to Use Bot & it's Benefits??
 
 ⚠️ Benefits: If you have a TeleGram Movie Channel or Any Copyright Channel, Then Its Useful for Daily Usage, You can Send Me Your File & I will Send Permanent Link to You & Channel will be Safe from **CopyRight Infringement** Issue. I support Channel Also You Can Check **About Bot**.
 """
-# --- GLOBAL AESTHETIC BYPASS ---
-ANIME_IMAGES = [
-    "https://telegram.org/img/t_logo.png"
-]
+# --- GLOBAL AESTHETIC BYPASS 
 
-def global_font_bypass(text):
-    if not text:
-        return text
-    normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    small_caps   = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
-    mapping = str.maketrans(normal_chars, small_caps)
-    return text.translate(mapping)
-  
+ANIME_IMAGES = [
+        "AgACAgUAAxkBAAIBCGomuMGof4O7epq3g5HBiRdSqTtiAAKUEWsbYn84VdkEZ6gy3AztAAgBAAMCAAN4AAceBA",
+        "AgACAgUAAxkBAAIBBmomuLtHLMlOo8xuu22Onv7mRlKHAAKXEGsbwmI5VX364zY2hqv3AAgBAAMCAAN4AAceBA",
+        "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubXOAAgBAAMCAAN4AAceBA"
+    ]
