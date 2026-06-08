@@ -73,17 +73,16 @@ async def start(bot, cmd: Message):
     if usr_cmd == "/start":
         await add_user_to_database(bot, cmd)
         
-        # Randomly ek anime photo select hogi list se
-        random_pic = random.choice(ANIME_IMAGES)
-        
-        # Text formatting with small caps and vertical blockquote line
+        # Images ka jhanjhat khatam, ab sirf stylish font aur vertical quote test karenge
         original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
-        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{global_font_bypass(original_text)}</blockquote>"
+        bypass_text = global_font_bypass(original_text)
+        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{bypass_text}</blockquote>"
+
+
         
-        await bot.send_photo(
-            chat_id=cmd.chat.id,
-            photo=random_pic,
-            caption=beautiful_text,
+        # Send_photo ki jagah simple send_message (reply_text) use kar rahe hain
+        await cmd.reply_text(
+            text=beautiful_text,
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -101,8 +100,7 @@ async def start(bot, cmd: Message):
                 ]
             )
         )
-            )
-        )
+
     else:
         try:
             try:
