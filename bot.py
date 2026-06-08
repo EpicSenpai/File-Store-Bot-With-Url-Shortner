@@ -59,7 +59,7 @@ async def _(bot: Client, cmd: Message):
 
 
 @Bot.on_message(filters.command("start") & filters.private)
-async def start(bot: Client, cmd: Message):
+async def start(bot, cmd: Message):
 
     if cmd.from_user.id in Config.BANNED_USERS:
         await cmd.reply_text("Sorry, You are banned.")
@@ -68,39 +68,39 @@ async def start(bot: Client, cmd: Message):
         back = await handle_force_sub(bot, cmd)
         if back == 400:
             return
-    
-    usr_cmd = cmd.text.split("_", 1)[-1]
-            if usr_cmd == "/start":
-            await add_user_to_database(bot, cmd)
-                # Randomly ek anime photo select hogi
-            random_pic = random.choice(ANIME_IMAGES)
-            
-            # Original text ko small caps aur vertical line me wrap kar rahe hain
-            original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
-            beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{global_font_bypass(original_text)}</blockquote>"
-            
-            await bot.send_photo(
-                chat_id=cmd.chat.id,
-                photo=random_pic,
-                caption=beautiful_text,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")
-                        ],
-                        [
-                            InlineKeyboardButton("About Bot", callback_data="aboutbot"),
-                            InlineKeyboardButton("About Dev", callback_data="aboutdevs"),
-                            InlineKeyboardButton("Close 🚪", callback_data="closeMessage")
-                        ],
-                        [
-                            InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"),
-                            InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")
-                        ]
-                    ]
-                )
-            )
 
+    usr_cmd = cmd.text.split("_", 1)[-1]
+    if usr_cmd == "/start":
+        await add_user_to_database(bot, cmd)
+        
+        # Randomly ek anime photo select hogi list se
+        random_pic = random.choice(ANIME_IMAGES)
+        
+        # Text formatting with small caps and vertical blockquote line
+        original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
+        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{global_font_bypass(original_text)}</blockquote>"
+        
+        await bot.send_photo(
+            chat_id=cmd.chat.id,
+            photo=random_pic,
+            caption=beautiful_text,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")
+                    ],
+                    [
+                        InlineKeyboardButton("About Bot", callback_data="aboutbot"),
+                        InlineKeyboardButton("About Dev", callback_data="aboutdevs"),
+                        InlineKeyboardButton("Close 🚪", callback_data="closeMessage")
+                    ],
+                    [
+                        InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"),
+                        InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")
+                    ]
+                ]
+            )
+        )
             )
         )
     else:
