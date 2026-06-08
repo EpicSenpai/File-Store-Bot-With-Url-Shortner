@@ -6,9 +6,10 @@ def global_font_bypass(text):
     if not text:
         return text
     normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    small_caps   = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    small_caps   = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ"
     mapping = str.maketrans(normal_chars, small_caps)
     return text.translate(mapping)
+
     
 import os
 import asyncio
@@ -79,20 +80,28 @@ async def start(bot, cmd: Message):
         except:
             pass
         
-        welcome_txt = (
-            f"Hello, {cmd.from_user.first_name}\n\n"
-            "This is a Permanent FileStore Bot.\n\n"
-            "How to Use Bot & it's Benefits??\n\n"
-            "📢 Send me any File & It will be uploaded in My Database & You will get Shorter Link.\n\n"
-            "⚠️ Benefits: If you have a Telegram Movie Channel or Any Copyright Channel Then This Bot Is Very Useful For You Because Your Channel Will Never Get Copyright Strike."
+        # 1. Pehle pure text ko small caps font mein convert kiya
+        line1 = global_font_bypass(f"hello, {cmd.from_user.first_name}")
+        line2 = global_font_bypass("this is a permanent filestore bot.")
+        line3 = global_font_bypass("how to use bot & it's benefits??")
+        line4 = global_font_bypass("send me any file & it will be uploaded in my database & you will get shorter link.")
+        line5 = global_font_bypass("benefits: if you have a telegram movie channel or any copyright channel then this bot is very useful for you because your channel will never get copyright strike.")
+        
+        # 2. Har line ka apna alag vertical quote block
+        beautiful_text = (
+            f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n"
+            f"<blockquote>{line1}</blockquote>"
+            f"<blockquote>{line2}</blockquote>"
+            f"<blockquote>{line3}</blockquote>"
+            f"<blockquote>📢 {line4}</blockquote>"
+            f"<blockquote>⚠️ {line5}</blockquote>\n"
         )
+
         
-        # Markdown hata kar simple HTML tags use kar rahe hain taaki Telegram crash na kare
-        beautiful_text = f"» ʜᴇʏ!!, {cmd.from_user.mention} ~\n\n<blockquote>{global_font_bypass(welcome_txt)}</blockquote>"
-        
+        # 3. Clean and responsive text reply format
         await cmd.reply_text(
             text=beautiful_text,
-            parse_mode=enums.ParseMode.HTML, # Yeh line message ko block hone se bachaegi
+            parse_mode=enums.ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")],[InlineKeyboardButton("About Bot", callback_data="aboutbot"), InlineKeyboardButton("About Dev", callback_data="aboutdevs"), InlineKeyboardButton("Close 🚪", callback_data="closeMessage")],[InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"), InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")]])
         )
 
