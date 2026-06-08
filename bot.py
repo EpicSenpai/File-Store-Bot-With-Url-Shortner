@@ -53,9 +53,11 @@ Bot = Client(
 )
 
 
-@Bot.on_message(filters.private)
-async def _(bot: Client, cmd: Message):
-    await handle_user_status(bot, cmd)
+@Bot.on_message(filters.photo & filters.private)
+async def get_photo_file_id(bot, cmd):
+    # Jo bhi photo tum bhejoge, ye uski sabse highest quality wali File ID chat mein bhej dega
+    await cmd.reply_text(f"<blockquote><code>{cmd.photo.file_id}</code></blockquote>", parse_mode=enums.ParseMode.HTML)
+
 
 
 @Bot.on_message(filters.command("start") & filters.private)
