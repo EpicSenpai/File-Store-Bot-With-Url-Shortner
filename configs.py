@@ -53,9 +53,7 @@ How to Use Bot & it's Benefits??
 """
 # --- GLOBAL AESTHETIC BYPASS ---
 ANIME_IMAGES = [
-    "https://images2.imgbox.com/39/fa/yK9I7Gcl_o.jpg",  # IMAGE_1
-    "https://images2.imgbox.com/a9/63/0O7Gk5Z0_o.jpg",  # IMAGE_2
-    "https://images2.imgbox.com/74/61/89WzZg0y_o.jpg"   # IMAGE_3
+    "https://telegram.org/img/t_logo.png"
 ]
 
 def global_font_bypass(text):
