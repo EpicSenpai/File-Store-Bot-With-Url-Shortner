@@ -71,7 +71,7 @@ async def start(bot, cmd: Message):
 
     usr_cmd = cmd.text.split("_", 1)[-1]
     if usr_cmd == "/start":
-        await add_user_to_database(bot, cmd)
+       # await add_user_to_database(bot, cmd)
         
         # Images ka jhanjhat khatam, ab sirf stylish font aur vertical quote test karenge
         original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
