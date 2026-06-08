@@ -73,36 +73,7 @@ async def set_bot_photo(bot, cmd):
     welcome_txt = global_font_bypass("please reply to an image or send an image with /setphoto to save it.")
     await cmd.reply_text(f"<blockquote>{welcome_txt}</blockquote>")
 
-@Bot.on_message(filters.photo & filters.private)
-async def handle_incoming_photos(bot, cmd):
-    # Agar aap koi bhi image bot ko bhejte ho, toh wo memory mein save ho jayegi
-    file_id = cmd.photo.file_id
-    if file_id not in Config.DYNAMIC_PICS:
-        Config.DYNAMIC_PICS.append(file_id)
-    success_txt = global_font_bypass("image saved successfully in bot database!")
-    await cmd.reply_text(f"<blockquote>{success_txt}</blockquote>")
-
-@Bot.on_message(filters.command("start") & filters.private)
-async def start(bot, cmd: Message):
-    if cmd.from_user.id in Config.BANNED_USERS:
-        await cmd.reply_text("Sorry, You are banned.")
-        return
-        
-    if Config.UPDATES_CHANNEL is not None:
-        back = await handle_force_sub(bot, cmd)
-        if back == 400:
-            return
-
     usr_cmd = cmd.text.split("_", 1)[-1]
-    
-    # Force Sub check ko thoda simple aur safe banaya taaki bot PM mein crash na ho
-    if Config.UPDATES_CHANNEL is not None:
-        try:
-            back = await handle_force_sub(bot, cmd)
-            if back == 400:
-                return
-        except:
-            pass
 
     if usr_cmd == "/start":
         try:
@@ -110,6 +81,7 @@ async def start(bot, cmd: Message):
         except:
             pass
         
+        # Safe photo selection layout
         if getattr(Config, 'DYNAMIC_PICS', []):
             random_pic = random.choice(Config.DYNAMIC_PICS)
         elif getattr(Config, 'ANIME_IMAGES', []):
@@ -117,6 +89,7 @@ async def start(bot, cmd: Message):
         else:
             random_pic = "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubX0AAgBAAMCAAN4AAMeBA"
 
+        # Aapka strictly designed text format
         raw_mention = f"hey!!, {cmd.from_user.first_name}"
         quote1 = f"**» {global_font_bypass(raw_mention)} ~ ❞**"
         
@@ -161,6 +134,7 @@ async def start(bot, cmd: Message):
                 
         except Exception as err:
             await cmd.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
+
 
 @Bot.on_message(filters.private & filters.command("status") & filters.user(Config.BOT_OWNER))
 async def sts(_, m: Message):
