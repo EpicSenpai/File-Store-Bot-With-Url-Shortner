@@ -5,6 +5,8 @@
 import os
 import asyncio
 import traceback
+import random
+from configs import ANIME_IMAGES, global_font_bypass
 from binascii import (
     Error
 )
@@ -68,26 +70,37 @@ async def start(bot: Client, cmd: Message):
             return
     
     usr_cmd = cmd.text.split("_", 1)[-1]
-    if usr_cmd == "/start":
-        await add_user_to_database(bot, cmd)
-        await cmd.reply_text(
-            Config.HOME_TEXT.format(cmd.from_user.first_name, cmd.from_user.id),
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
+            if usr_cmd == "/start":
+            await add_user_to_database(bot, cmd)
+                # Randomly ek anime photo select hogi
+            random_pic = random.choice(ANIME_IMAGES)
+            
+            # Original text ko small caps aur vertical line me wrap kar rahe hain
+            original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
+            beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{global_font_bypass(original_text)}</blockquote>"
+            
+            await bot.send_photo(
+                chat_id=cmd.chat.id,
+                photo=random_pic,
+                caption=beautiful_text,
+                reply_markup=InlineKeyboardMarkup(
                     [
-                        InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzU1")
-                    ],
-                    [
-                        InlineKeyboardButton("About Bot", callback_data="aboutbot"),
-                        InlineKeyboardButton("About Dev", callback_data="aboutdevs"),
-                        InlineKeyboardButton("Close 🚪", callback_data="closeMessage")
-                    ],
-                    [
-                        InlineKeyboardButton("Support Group", url="https://t.me/+fssmSSmO1uk5NjI9"),
-                        InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeog")
+                        [
+                            InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")
+                        ],
+                        [
+                            InlineKeyboardButton("About Bot", callback_data="aboutbot"),
+                            InlineKeyboardButton("About Dev", callback_data="aboutdevs"),
+                            InlineKeyboardButton("Close 🚪", callback_data="closeMessage")
+                        ],
+                        [
+                            InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"),
+                            InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")
+                        ]
                     ]
-                ]
+                )
+            )
+
             )
         )
     else:
