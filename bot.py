@@ -100,22 +100,20 @@ async def start(bot, cmd: Message):
         except:
             pass
         
-        # dynamic image picking check
         if getattr(Config, 'DYNAMIC_PICS', []):
             random_pic = random.choice(Config.DYNAMIC_PICS)
         elif getattr(Config, 'ANIME_IMAGES', []):
             random_pic = random.choice(Config.ANIME_IMAGES)
         else:
-            # Fallback agar ek bhi photo na miley
             random_pic = "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubX0AAgBAAMCAAN4AAMeBA"
 
-        # Aapke screenshot ke mutabik do alag alag modern quotes block layout
-        quote1 = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**"
+        raw_mention = f"hey!!, {cmd.from_user.first_name}"
+        quote1 = f"**» {global_font_bypass(raw_mention)} ~ ❞**"
         
-        custom_bio = "every light has its shadow, but every shadow can be turned into light.."
-        quote2 = f"<blockquote>{global_font_bypass(custom_bio)}</blockquote>"
+        raw_bio = "every light has its shadow, but every shadow can be turned into light..."
+        quote2 = global_font_bypass(raw_bio)
         
-        beautiful_caption = f"<blockquote>{quote1}</blockquote>\n\n{quote2}"
+        beautiful_caption = f"<blockquote>{quote1}</blockquote>\n\n<blockquote>{quote2}</blockquote>"
         
         await bot.send_photo(
             chat_id=cmd.chat.id,
@@ -131,12 +129,6 @@ async def start(bot, cmd: Message):
     else:
         try:
             try:
-
-
-    else:
-        try:
-            try:
-
                 file_id = int(b64_to_str(usr_cmd).split("_")[-1])
             except (Error, UnicodeDecodeError):
                 file_id = int(usr_cmd.split("_")[-1])
@@ -152,13 +144,10 @@ async def start(bot, cmd: Message):
             else:
                 message_ids.append(int(GetMessage.id))
             for i in range(len(message_ids)):
-                await send_media_and_reply(bot, user_id=cmd.from_user.id, file_id=int(message_ids[i]))
+                await send_media_and_reply(bot, user_id=cmd.from_user.id, message_id=int(message_ids[i]))
         except Exception as err:
             await cmd.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
 
-
-@Bot.on_message((filters.document | filters.video | filters.audio | filters.photo) & ~filters.chat(Config.DB_CHANNEL))
-async def main(bot: Client, message: Message):
 
     if message.chat.type == enums.ChatType.PRIVATE:
 
