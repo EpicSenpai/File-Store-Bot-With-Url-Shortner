@@ -13,7 +13,7 @@ class Config(object):
   SHORTLINK_URL = os.environ.get('SHORTLINK_URL', "https://gplinks.com")
   SHORTLINK_API = os.environ.get('SHORTLINK_API', "540e6d65d2851a9c645d0eafb573535af3d33943")
   BOT_OWNER = int(os.environ.get("BOT_OWNER", "6341576569"))
-  DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://RemFileBot:Shadow#Node_2026@cluster0.gcku8pz.mongodb.net/?appName=Cluster0")
+  DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://RemFileBot:ShadowNode_2026@cluster0.gcku8pz.mongodb.net/?appName=Cluster0")
   UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "-1003971704016")
   LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1003981196985"))
   BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "").split())
