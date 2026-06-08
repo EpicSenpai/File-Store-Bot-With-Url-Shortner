@@ -51,3 +51,18 @@ How to Use Bot & it's Benefits??
 
 ⚠️ Benefits: If you have a TeleGram Movie Channel or Any Copyright Channel, Then Its Useful for Daily Usage, You can Send Me Your File & I will Send Permanent Link to You & Channel will be Safe from **CopyRight Infringement** Issue. I support Channel Also You Can Check **About Bot**.
 """
+# --- GLOBAL AESTHETIC BYPASS ---
+ANIME_IMAGES = [
+    "https://images2.imgbox.com/39/fa/yK9I7Gcl_o.jpg",  # IMAGE_1
+    "https://images2.imgbox.com/a9/63/0O7Gk5Z0_o.jpg",  # IMAGE_2
+    "https://images2.imgbox.com/74/61/89WzZg0y_o.jpg"   # IMAGE_3
+]
+
+def global_font_bypass(text):
+    if not text:
+        return text
+    normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    small_caps   = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
+    mapping = str.maketrans(normal_chars, small_caps)
+    return text.translate(mapping)
+  
