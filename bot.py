@@ -87,10 +87,12 @@ async def start(bot, cmd: Message):
             "⚠️ Benefits: If you have a Telegram Movie Channel or Any Copyright Channel Then This Bot Is Very Useful For You Because Your Channel Will Never Get Copyright Strike."
         )
         
-        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{global_font_bypass(welcome_txt)}</blockquote>"
+        # Markdown hata kar simple HTML tags use kar rahe hain taaki Telegram crash na kare
+        beautiful_text = f"» ʜᴇʏ!!, {cmd.from_user.mention} ~\n\n<blockquote>{global_font_bypass(welcome_txt)}</blockquote>"
         
         await cmd.reply_text(
             text=beautiful_text,
+            parse_mode=enums.ParseMode.HTML, # Yeh line message ko block hone se bachaegi
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")],[InlineKeyboardButton("About Bot", callback_data="aboutbot"), InlineKeyboardButton("About Dev", callback_data="aboutdevs"), InlineKeyboardButton("Close 🚪", callback_data="closeMessage")],[InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"), InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")]])
         )
 
