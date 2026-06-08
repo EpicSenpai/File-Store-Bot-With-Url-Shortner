@@ -2,11 +2,19 @@
 # Subscribe YouTube Channel For Amazing Bot @Tech_VJ
 # Ask Doubt on telegram @KingVJ01
 
+def global_font_bypass(text):
+    if not text:
+        return text
+    normal_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    small_caps   = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    mapping = str.maketrans(normal_chars, small_caps)
+    return text.translate(mapping)
+    
 import os
 import asyncio
 import traceback
 import random
-from configs import ANIME_IMAGES, global_font_bypass
+from configs import ANIME_IMAGES
 from binascii import (
     Error
 )
@@ -53,12 +61,6 @@ Bot = Client(
 )
 
 
-@Bot.on_message(filters.photo & filters.private)
-async def get_photo_file_id(bot, cmd):
-    # Jo bhi photo tum bhejoge, ye uski sabse highest quality wali File ID chat mein bhej dega
-    await cmd.reply_text(f"<blockquote><code>{cmd.photo.file_id}</code></blockquote>", parse_mode=enums.ParseMode.HTML)
-
-
 
 @Bot.on_message(filters.command("start") & filters.private)
 async def start(bot, cmd: Message):
@@ -73,18 +75,32 @@ async def start(bot, cmd: Message):
 
     usr_cmd = cmd.text.split("_", 1)[-1]
     if usr_cmd == "/start":
-       # await add_user_to_database(bot, cmd)
+    if usr_cmd == "/start":
+        try:
+            await add_user_to_database(bot, cmd)
+        except Exception:
+            pass
+            
+        # Randomly ek photo select hogi Config ki File ID wali list se
+        random_pic = random.choice(ANIME_IMAGES)
+            
+        # Aapka original welcome message
+        original_msg = (
+            f"Hello, [{cmd.from_user.first_name}](tg://user?id={cmd.from_user.id})\n\n"
+            "This is a Permanent FileStore Bot.\n\n"
+            "How to Use Bot & it's Benefits??\n\n"
+            "📢 Send me any File & It will be uploaded in My Database & You will get Shorter Link.\n\n"
+            "⚠️ Benefits: If you have a Telegram Movie Channel or Any Copyright Channel Then This Bot Is Very Useful For You Because Your Channel Will Never Get Copyright Strike."
+        )
         
-        # Images ka jhanjhat khatam, ab sirf stylish font aur vertical quote test karenge
-        original_text = "A graceful shadow and loyal companion, dedicated to uphold my master's will"
-        bypass_text = global_font_bypass(original_text)
-        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{bypass_text}</blockquote>"
-
-
+        # Pure text ko small letters font aur vertical quote ke andar lock kiya
+        beautiful_text = f"<blockquote>{global_font_bypass(original_msg)}</blockquote>"
         
-        # Send_photo ki jagah simple send_message (reply_text) use kar rahe hain
-        await cmd.reply_text(
-            text=beautiful_text,
+        # Direct photo aur stylish caption bhej rahe hain bina kisi lag ke
+        await bot.send_photo(
+            chat_id=cmd.chat.id,
+            photo=random_pic,
+            caption=beautiful_text,
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -95,6 +111,14 @@ async def start(bot, cmd: Message):
                         InlineKeyboardButton("About Dev", callback_data="aboutdevs"),
                         InlineKeyboardButton("Close 🚪", callback_data="closeMessage")
                     ],
+                    [
+                        InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"),
+                        InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")
+                    ]
+                ]
+            )
+        )
+
                     [
                         InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"),
                         InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")
