@@ -72,37 +72,41 @@ async def start(bot, cmd: Message):
         back = await handle_force_sub(bot, cmd)
         if back == 400:
             return
-
     usr_cmd = cmd.text.split("_", 1)[-1]
-    if usr_cmd == "/start":
     if usr_cmd == "/start":
         try:
             await add_user_to_database(bot, cmd)
-        except Exception:
+        except:
             pass
             
-        # Randomly ek photo select hogi Config ki File ID wali list se
         random_pic = random.choice(ANIME_IMAGES)
-            
-        # Aapka original welcome message
-        original_msg = (
-            f"Hello, [{cmd.from_user.first_name}](tg://user?id={cmd.from_user.id})\n\n"
+        
+        # Yeh raha tumhara exact text with Small Caps Font
+        welcome_txt = (
+            f"Hello, {cmd.from_user.first_name}\n\n"
             "This is a Permanent FileStore Bot.\n\n"
             "How to Use Bot & it's Benefits??\n\n"
             "📢 Send me any File & It will be uploaded in My Database & You will get Shorter Link.\n\n"
             "⚠️ Benefits: If you have a Telegram Movie Channel or Any Copyright Channel Then This Bot Is Very Useful For You Because Your Channel Will Never Get Copyright Strike."
         )
         
-        # Pure text ko small letters font aur vertical quote ke andar lock kiya
-        beautiful_text = f"<blockquote>{global_font_bypass(original_msg)}</blockquote>"
+        # Small Caps Font Bypass
+        stylish_text = global_font_bypass(welcome_txt)
         
-        # Direct photo aur stylish caption bhej rahe hain bina kisi lag ke
+        # Vertical Quote (<blockquote>) aur Small Caps font ka combo
+        beautiful_text = f"**» ʜᴇʏ!!, {cmd.from_user.mention} ~ ❞**\n\n<blockquote>{stylish_text}</blockquote>"
+        
         await bot.send_photo(
             chat_id=cmd.chat.id,
             photo=random_pic,
             caption=beautiful_text,
-            reply_markup=InlineKeyboardMarkup(
-                [
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")],
+                [InlineKeyboardButton("About Bot", callback_data="aboutbot"), InlineKeyboardButton("About Dev", callback_data="aboutdevs"), InlineKeyboardButton("Close 🚪", callback_data="closeMessage")],
+                [InlineKeyboardButton("Support Group", url="https://t.me/+fssm5SmO1uk5NjI9"), InlineKeyboardButton("YouTube Channel", url="https://youtube.com/@auratubeo")]
+            ])
+        )
+
                     [
                         InlineKeyboardButton("Updates Channel", url="https://t.me/+W0znQsN7HyAzNzUl")
                     ],
