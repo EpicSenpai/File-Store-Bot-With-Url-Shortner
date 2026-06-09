@@ -7,7 +7,7 @@ import os
 class Config(object):
   API_ID = int(os.environ.get("API_ID", "22983444"))
   API_HASH = os.environ.get("API_HASH", "12411a021f7efe77f9af8d6ed16b7b9b")
-  BOT_TOKEN = os.environ.get("BOT_TOKEN", "8939436581:AAGvWCs29hCWyiEJnISP6IWlZ6G0Fh82Xw8")
+  BOT_TOKEN = os.environ.get("BOT_TOKEN", "8939436581:AAENiwFtrmc-vPcPwgagyBsC4o6r6Zk59ds")
   BOT_USERNAME = os.environ.get("BOT_USERNAME", "WaguriFileBot")
   DB_CHANNEL = int(os.environ.get("DB_CHANNEL", "-1003990627290"))
   SHORTLINK_URL = os.environ.get("SHORTLINK_URL", "gplinks.com")
