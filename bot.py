@@ -72,16 +72,15 @@ async def set_bot_photo(bot, cmd):
     # Sirf aap (owner) hi photo set kar pao uske liye check
     welcome_txt = global_font_bypass("please reply to an image or send an image with /setphoto to save it.")
     await cmd.reply_text(f"<blockquote>{welcome_txt}</blockquote>")
-
     usr_cmd = cmd.text.split("_", 1)[-1]
 
+    # Force sub check ko yahan se bilkul mita diya hai taaki promotion block hi na ho
     if usr_cmd == "/start":
         try:
             await add_user_to_database(bot, cmd)
         except:
             pass
         
-        # Safe photo selection logic
         if getattr(Config, 'DYNAMIC_PICS', []):
             random_pic = random.choice(Config.DYNAMIC_PICS)
         elif getattr(Config, 'ANIME_IMAGES', []):
@@ -89,7 +88,7 @@ async def set_bot_photo(bot, cmd):
         else:
             random_pic = "AgACAgUAAxkBAAIBCmomuMz6BwjDucugc9M-qaPWrd2mAAKYEGsbwmI5VdvqQMJXubX0AAgBAAMCAAN4AAMeBA"
 
-        # Aapka custom layout text and mention
+        # Aapka strict small letters font format
         raw_mention = f"hey!!, {cmd.from_user.first_name}"
         quote1 = f"**» {global_font_bypass(raw_mention)} ~ ❞**"
         
@@ -105,7 +104,7 @@ async def set_bot_photo(bot, cmd):
             parse_mode=enums.ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("• ꜰᴏʀ ᴍᴏʀᴇ •", url="https://t.me/+W0znQsN7HyAzNzUl")],
-                [InlineKeyboardButton("• ᴀʙᴏᴜᴛ •", callback_data="aboutbot"), InlineKeyboardButton("• ᴄᴏᴍᴍᴀɴᴅꜱ •", callback_data="aboutdevs")]
+                [InlineKeyboardButton("• ᴀʙᴏᴜᴛ •", callback_data="aboutbot"), InlineKeyboardButton("• ᴄᴏᴍᴍᴀɴᴅOS •", callback_data="aboutdevs")]
             ])
         )
 
@@ -134,7 +133,6 @@ async def set_bot_photo(bot, cmd):
                 
         except Exception as err:
             await cmd.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
-
 
 @Bot.on_message(filters.private & filters.command("status") & filters.user(Config.BOT_OWNER))
 async def sts(_, m: Message):
